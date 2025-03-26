@@ -1,31 +1,68 @@
 import pygame
+import sys
 pygame.init() 
 pygame.display.set_mode()
-screenlength = 800
-screenwidth = 600
-screen = pygame.display.set_mode((screenlength, screenwidth))
+screen = pygame.display.set_mode((400, 600))
 BGCOLOUR = (178, 190, 181)
-WHITE = (0, 0 , 0)
+white = (255, 255, 255)
+black = (0, 0 , 0)
 resultscreenfont = pygame.font.SysFont('fixedsys', 25)
 pygame.display.set_caption("Musical Calculator")
 # Now onto rectangles ahahahahahahahahahahah
-resultscreen = pygame.Rect(20, 50, 400, 150)
+resultscreen = pygame.Rect(200, 50, 400, 150)
 numberbuttons = '0, 1, 2, 3, 4, 5, 6, 7, 8, 9'
-numberbuttons.split(', ')
+numberbutton = numberbuttons.split(', ')
 symbolbuttons = '*, /, +, -, =, ., %'
-symbolbuttons.split(', ')
-numberbuttonwidth, numberbuttonheight = 90, 90
-class numberbuttonrecs:
+symbolbutton = symbolbuttons.split(', ')
+
+class buttonrecs:
     def __init__(self, x , y, width, height, text, colour=(100, 100, 255), hovercolour=(150, 150, 255)):
         self.rect = pygame.Rect(x, y, width, height)
         self.text = text
         self.colour = colour
         self.hovercolour = hovercolour
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.colour, self.rect, border_radius = 5)
+        pygame.draw.rect(screen, self.hovercolour, self.rect, border_radius = 5)
+        font = pygame.font.SysFont('fixedsys', 20)
+        text = font.render(self.text, True, black)
+        text_rect = text.get_rect(center=self.rect.center)
+        screen.blit(text, text_rect)
+    def is_clicked(self, pos):
+        return self.rect.collidepoint(pos)
+    
+numbutton0 = buttonrecs(80, 430, 50, 50, '0')
+numbutton1 = buttonrecs(20, 250, 50, 50, '1')
+numbutton2 = buttonrecs(80, 250, 50, 50, '2')
+numbutton3 = buttonrecs(140, 250, 50, 50, '3')
+numbutton4 = buttonrecs(20, 310, 50, 50, '4')
+numbutton5 = buttonrecs(80, 310, 50, 50, '5')
+numbutton6 = buttonrecs(140, 310, 50, 50, '6')
+numbutton7 = buttonrecs(20, 370, 50, 50, '7')
+numbutton8 = buttonrecs(80, 370, 50, 50, '8')
+numbutton9 = buttonrecs(140, 370, 50, 50, '9')
+symbuttonmult = buttonrecs(200, 250, 50, 50, '*')
+symbuttondiv = buttonrecs(260, 250, 50, 50, '/')
+symbuttonadd = buttonrecs(320, 250, 50, 50, '+')
+symbuttonsub = buttonrecs(200, 310, 50, 50, '-')
+symbuttoneq = buttonrecs(260, 310, 50, 50, '=')
+
+#on to the logic ahahhahahahahahhhh
+current_input = ""
+result = None
+
 
 running = True
-
 while running:
 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    screen.fill(BGCOLOUR)
+
+    pygame.draw.rect
+        
+    pygame.display.flip()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
