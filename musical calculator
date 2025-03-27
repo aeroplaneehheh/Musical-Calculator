@@ -1,6 +1,16 @@
 import pygame
 import sys
-pygame.init() 
+from pygame import mixer 
+pygame.init()
+mixer.init()
+pygame.mixer.set_num_channels(8)
+button_click_sound1 = mixer.Sound("C:/Users/DBuser/Downloads/vine-boom-sound-effect(chosic.com).mp3")
+button_click_sound1.set_volume(0.7)
+button_click_sound2 = mixer.Sound("C:/Users/DBuser/Downloads/sus-meme-sound-181271.mp3")
+button_click_sound2.set_volume(0.7)
+button_click_sound3 = mixer.Sound("C:/Users/DBuser/Downloads/""goofy-ahh-car-horn-200870.mp3")
+button_click_sound3.set_volume(0.7)
+button_click_soundeq = mixer.Sound("C:/Users/DBuser/Downloads/bruh-sound-effect-2-37927.mp3")
 pygame.display.set_mode()
 screen = pygame.display.set_mode((400, 600))
 BGCOLOUR = (178, 190, 181)
@@ -93,10 +103,18 @@ while running:
                     if buttonrecs.text == "=":
                         print('=')
                         calculate()
+                        if buttonrecs.text == '=':
+                            button_click_soundeq.play()
                     elif buttonrecs.text == "AC":
                         AC()
                     else:
                         currentinput += buttonrecs.text
+                        if buttonrecs.text == '1':
+                            button_click_sound1.play()
+                        elif buttonrecs.text == '2':
+                            button_click_sound2.play()
+                        elif buttonrecs.text == '3':
+                            button_click_sound3.play()
     for buttonrecs in Buttons:
         if buttonrecs.rect.collidepoint(pygame.mouse.get_pos()):
             buttonrecs.colour = buttonrecs.hovercolour
@@ -104,7 +122,7 @@ while running:
             buttonrecs.colour = white
     for buttonrecs in Buttons:
         buttonrecs.draw(screen)
-        
+
     pygame.display.flip()
 
 pygame.quit()
