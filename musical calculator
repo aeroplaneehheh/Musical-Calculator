@@ -6,64 +6,106 @@ screen = pygame.display.set_mode((400, 600))
 BGCOLOUR = (178, 190, 181)
 white = (255, 255, 255)
 black = (0, 0 , 0)
-resultscreenfont = pygame.font.SysFont('fixedsys', 25)
+resultscreenfont = pygame.font.SysFont('fixedsys', 30)
 pygame.display.set_caption("Musical Calculator")
 # Now onto rectangles ahahahahahahahahahahah
-resultscreen = pygame.Rect(200, 50, 400, 150)
-numberbuttons = '0, 1, 2, 3, 4, 5, 6, 7, 8, 9'
-numberbutton = numberbuttons.split(', ')
-symbolbuttons = '*, /, +, -, =, ., %'
-symbolbutton = symbolbuttons.split(', ')
+resultscreen = pygame.Rect(200, 50, 300, 150)
 
 class buttonrecs:
-    def __init__(self, x , y, width, height, text, colour=(100, 100, 255), hovercolour=(150, 150, 255)):
+    def __init__(self, x , y, width, height, text, colour=(100, 100, 255), hovercolour=(138, 154, 91)):
         self.rect = pygame.Rect(x, y, width, height)
         self.text = text
         self.colour = colour
         self.hovercolour = hovercolour
+        self.text_surf = resultscreenfont.render(text, True, black)
+        self.text_rect= self.text_surf.get_rect(center=self.rect.center)
+    
     def draw(self, screen):
         pygame.draw.rect(screen, self.colour, self.rect, border_radius = 5)
-        pygame.draw.rect(screen, self.hovercolour, self.rect, border_radius = 5)
-        font = pygame.font.SysFont('fixedsys', 20)
-        text = font.render(self.text, True, black)
-        text_rect = text.get_rect(center=self.rect.center)
-        screen.blit(text, text_rect)
-    def is_clicked(self, pos):
+        pygame.draw.rect(screen, black, self.rect, 2, border_radius = 5)
+        screen.blit(self.text_surf, self.text_rect)
+
+    def isclicked(self, pos):
         return self.rect.collidepoint(pos)
-    
-numbutton0 = buttonrecs(80, 430, 50, 50, '0')
-numbutton1 = buttonrecs(20, 250, 50, 50, '1')
-numbutton2 = buttonrecs(80, 250, 50, 50, '2')
-numbutton3 = buttonrecs(140, 250, 50, 50, '3')
-numbutton4 = buttonrecs(20, 310, 50, 50, '4')
-numbutton5 = buttonrecs(80, 310, 50, 50, '5')
-numbutton6 = buttonrecs(140, 310, 50, 50, '6')
-numbutton7 = buttonrecs(20, 370, 50, 50, '7')
-numbutton8 = buttonrecs(80, 370, 50, 50, '8')
-numbutton9 = buttonrecs(140, 370, 50, 50, '9')
-symbuttonmult = buttonrecs(200, 250, 50, 50, '*')
-symbuttondiv = buttonrecs(260, 250, 50, 50, '/')
-symbuttonadd = buttonrecs(320, 250, 50, 50, '+')
-symbuttonsub = buttonrecs(200, 310, 50, 50, '-')
-symbuttoneq = buttonrecs(260, 310, 50, 50, '=')
+Buttons = [
+    buttonrecs(20, 150, 80, 80, '1', white),
+    buttonrecs(110, 150, 80, 80, '2', white),
+    buttonrecs(200, 150, 80, 80, '3', white),
+    buttonrecs(290, 150, 80, 80, '+', white),
+    buttonrecs(20, 250, 80, 80, '4', white),
+    buttonrecs(110, 250, 80, 80, '5', white),
+    buttonrecs(200, 250, 80, 80, '6', white),
+    buttonrecs(290, 250, 80, 80, '-', white),
+    buttonrecs(20, 350, 80, 80, '7', white),
+    buttonrecs(110, 350, 80, 80, '8', white),
+    buttonrecs(200, 350, 80, 80, '9', white),
+    buttonrecs(290, 350, 80, 80, '/', white),
+    buttonrecs(20, 450, 80, 80, 'AC', white),
+    buttonrecs(110, 450, 80, 80, '0', white),
+    buttonrecs(200, 450, 80, 80, '=', white),
+    buttonrecs(290, 450, 80, 80, '*', white),
+]
 
 #on to the logic ahahhahahahahahhhh
-current_input = ""
+currentinput = ""
 result = None
+def calculate():
+    global currentinput, result
+    try:
+        result = eval(currentinput)
+        currentinput = str(result)
+    except:
+        result = "Error."
 
+def AC():
+    global currentinput, result
+    currentinput = ""
+    result = None
 
 running = True
 while running:
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
     screen.fill(BGCOLOUR)
 
-    pygame.draw.rect
-        
-    pygame.display.flip()
+    inputsurf = resultscreenfont.render(currentinput, True, black)
+    screen.blit(inputsurf, (20, 50))
+    if result is not None:
+        result_surf = resultscreenfont.render(f'{result}', True, black)
+        screen.blit(result_surf, (20, 100))
+        result = None
+    
+    #yay the buttons
+    for buttonrecs in Buttons:
+        buttonrecs.draw(screen)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill(BGCOLOUR)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            for buttonrecs in Buttons:
+                if buttonrecs.rect.collidepoint(pygame.mouse.get_pos()):
+                    buttonrecs.colour = buttonrecs.hovercolour
+                else:
+                    buttonrecs.colour = white
+                buttonrecs.draw(screen)
+                if buttonrecs.isclicked(event.pos):
+                    if buttonrecs.text == "=":
+                        print('=')
+                        calculate()
+                    elif buttonrecs.text == "AC":
+                        AC()
+                    else:
+                        currentinput += buttonrecs.text
+    for buttonrecs in Buttons:
+        if buttonrecs.rect.collidepoint(pygame.mouse.get_pos()):
+            buttonrecs.colour = buttonrecs.hovercolour
+        else:
+            buttonrecs.colour = white
+    for buttonrecs in Buttons:
+        buttonrecs.draw(screen)
+        
+    pygame.display.flip()
+
+pygame.quit()
+sys.exit()
