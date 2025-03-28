@@ -4,13 +4,20 @@ from pygame import mixer
 pygame.init()
 mixer.init()
 pygame.mixer.set_num_channels(8)
-button_click_sound1 = mixer.Sound("C:/Users/DBuser/Downloads/vine-boom-sound-effect(chosic.com).mp3")
-button_click_sound1.set_volume(0.7)
-button_click_sound2 = mixer.Sound("C:/Users/DBuser/Downloads/sus-meme-sound-181271.mp3")
-button_click_sound2.set_volume(0.7)
-button_click_sound3 = mixer.Sound("C:/Users/DBuser/Downloads/""goofy-ahh-car-horn-200870.mp3")
+button_click_sound1 = mixer.Sound("C:/Users/DBuser/Downloads/632924__hewnmarrow__felted-piano-loop-130-bpm-7_4-3001.wav")
+button_click_sound1.set_volume(1)
+button_click_sound2 = mixer.Sound("C:/Users/DBuser/Downloads/792669__erokia__msfxp13-59-120-bpm-ambient.wav")
+button_click_sound2.set_volume(1)
+button_click_sound3 = mixer.Sound("C:/Users/DBuser/Downloads/795364__looplicator__103-bpm-industrial-drum-loop-13519-wav.wav")
 button_click_sound3.set_volume(0.7)
-button_click_soundeq = mixer.Sound("C:/Users/DBuser/Downloads/bruh-sound-effect-2-37927.mp3")
+button_click_sound4 = mixer.Sound("C:/Users/DBuser/Downloads/752900__doctor_dreamchip__a-cold-dark-winter-92-bpm-c-minor-drum-4.flac")
+button_click_sound4.set_volume(0.7)
+button_click_sound5 = mixer.Sound("C:/Users/DBuser/Downloads/752934__doctor_dreamchip__alphabet-junkyard-95-bpm-d-major-bass-3.flac")
+button_click_sound5.set_volume(1)
+button_click_sound6 = mixer.Sound("C:/Users/DBuser/Downloads/tops-metallic-drums-high-loop_125bpm_D_major.wav")
+button_click_sound6.set_volume(1)
+
+#button_click_soundeq = mixer.Sound()
 pygame.display.set_mode()
 screen = pygame.display.set_mode((400, 600))
 BGCOLOUR = (178, 190, 181)
@@ -56,6 +63,24 @@ Buttons = [
     buttonrecs(290, 450, 80, 80, '*', white),
 ]
 
+class musicbutton:
+    def __init__(self, x , y, width, height, text, colour=(100, 100, 255), hovercolour=(138, 154, 91)):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.text = text
+        self.colour = colour
+        self.hovercolour = hovercolour
+        self.text_surf = resultscreenfont.render(text, True, black)
+        self.text_rect= self.text_surf.get_rect(center=self.rect.center)
+    
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.colour, self.rect, border_radius = 5)
+        pygame.draw.rect(screen, black, self.rect, 2, border_radius = 5)
+        screen.blit(self.text_surf, self.text_rect)
+
+clearmusicbutton = [
+    musicbutton(20, 550, 350, 40, 'All music stop', white)
+]
+
 #on to the logic ahahhahahahahahhhh
 currentinput = ""
 result = None
@@ -88,6 +113,9 @@ while running:
     for buttonrecs in Buttons:
         buttonrecs.draw(screen)
 
+    for musicbutton in clearmusicbutton:
+        musicbutton.draw(screen)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -103,8 +131,8 @@ while running:
                     if buttonrecs.text == "=":
                         print('=')
                         calculate()
-                        if buttonrecs.text == '=':
-                            button_click_soundeq.play()
+                        #if buttonrecs.text == '=':
+                            #button_click_soundeq.play()
                     elif buttonrecs.text == "AC":
                         AC()
                     else:
@@ -115,13 +143,24 @@ while running:
                             button_click_sound2.play()
                         elif buttonrecs.text == '3':
                             button_click_sound3.play()
+                        elif buttonrecs.text == '4':
+                            button_click_sound4.play()
+                        elif buttonrecs.text == '5':
+                            button_click_sound5.play()
+                        elif buttonrecs.text == '6':
+                            button_click_sound6.play()
     for buttonrecs in Buttons:
         if buttonrecs.rect.collidepoint(pygame.mouse.get_pos()):
             buttonrecs.colour = buttonrecs.hovercolour
         else:
             buttonrecs.colour = white
-    for buttonrecs in Buttons:
-        buttonrecs.draw(screen)
+    buttonrecs.draw(screen)
+    for musicbutton in clearmusicbutton:
+        if musicbutton.rect.collidepoint(pygame.mouse.get_pos()):
+            musicbutton.colour = musicbutton.hovercolour
+        else:
+            musicbutton.colour = white
+    musicbutton.draw(screen)
 
     pygame.display.flip()
 
