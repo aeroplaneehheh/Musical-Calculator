@@ -11,7 +11,7 @@ button_click_sound2.set_volume(1)
 button_click_sound3 = mixer.Sound("C:/Users/DBuser/Downloads/795364__looplicator__103-bpm-industrial-drum-loop-13519-wav.wav")
 button_click_sound3.set_volume(0.7)
 button_click_sound4 = mixer.Sound("C:/Users/DBuser/Downloads/752900__doctor_dreamchip__a-cold-dark-winter-92-bpm-c-minor-drum-4.flac")
-button_click_sound4.set_volume(0.7)
+button_click_sound4.set_volume(0.2)
 button_click_sound5 = mixer.Sound("C:/Users/DBuser/Downloads/752934__doctor_dreamchip__alphabet-junkyard-95-bpm-d-major-bass-3.flac")
 button_click_sound5.set_volume(1)
 button_click_sound6 = mixer.Sound("C:/Users/DBuser/Downloads/tops-metallic-drums-high-loop_125bpm_D_major.wav")
@@ -81,6 +81,10 @@ clearmusicbutton = [
     musicbutton(20, 550, 350, 40, 'All music stop', white)
 ]
 
+def musicstop():
+    pygame.mixer.stop()
+
+musicstop == False
 #on to the logic ahahhahahahahahhhh
 currentinput = ""
 result = None
@@ -131,8 +135,6 @@ while running:
                     if buttonrecs.text == "=":
                         print('=')
                         calculate()
-                        #if buttonrecs.text == '=':
-                            #button_click_soundeq.play()
                     elif buttonrecs.text == "AC":
                         AC()
                     else:
@@ -149,6 +151,7 @@ while running:
                             button_click_sound5.play()
                         elif buttonrecs.text == '6':
                             button_click_sound6.play()
+                    
     for buttonrecs in Buttons:
         if buttonrecs.rect.collidepoint(pygame.mouse.get_pos()):
             buttonrecs.colour = buttonrecs.hovercolour
@@ -158,6 +161,8 @@ while running:
     for musicbutton in clearmusicbutton:
         if musicbutton.rect.collidepoint(pygame.mouse.get_pos()):
             musicbutton.colour = musicbutton.hovercolour
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                musicstop() == True
         else:
             musicbutton.colour = white
     musicbutton.draw(screen)
