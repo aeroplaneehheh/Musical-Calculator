@@ -1,7 +1,7 @@
 # Musical Calculator
 Makes music, hopefully
 ---
-Demo video: https://youtu.be/A5-kntrRe28](https://youtu.be/rd7HECK_D_4
+Demo video: https://youtu.be/rd7HECK_D_4
 ---
 Features:
 - Can do addition, subtraction, multiplication, and division
