@@ -18,7 +18,12 @@ Features:
 * : *
   
 / : /
+
 ENTER : =
+
 DELETE : AC
+
 BACKSPACE : delete previous digit
+
 All music stop: stops all ongoing music
+
