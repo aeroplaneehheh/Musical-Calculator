@@ -143,7 +143,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         
-        # Mouse click handling
+        # Mouse click
         if event.type == pygame.MOUSEBUTTONDOWN:
             for button in Buttons:
                 if button.isclicked(event.pos):
@@ -171,7 +171,7 @@ while running:
             if music_stop_button.isclicked(event.pos):
                 musicstop()
         
-        # Keyboard handling
+        # Keyboard
         if event.type == pygame.KEYDOWN:
             if event.key in key_to_button_map:
                 button_text = key_to_button_map[event.key]
@@ -207,10 +207,8 @@ while running:
         if pressed_keys[key]:
             current_key_button = button_text
             break
-    
-    # Draw all buttons with proper highlighting
+
     for button in Buttons:
-        # Highlight if key pressed or mouse hover
         if (current_key_button == button.text or 
             button.rect.collidepoint(pygame.mouse.get_pos())):
             button.colour = button.hovercolour
@@ -218,7 +216,6 @@ while running:
             button.colour = white
         button.draw(screen)
     
-    # Draw music stop button
     if music_stop_button.rect.collidepoint(pygame.mouse.get_pos()):
         music_stop_button.colour = music_stop_button.hovercolour
     else:
