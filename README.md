@@ -1,6 +1,8 @@
 # Musical Calculator
 Makes music, hopefully
 ---
+Demo video: https://youtu.be/A5-kntrRe28
+---
 Features:
 - Can do addition, subtraction, multiplication, and division
 - Audio plays on some buttons
