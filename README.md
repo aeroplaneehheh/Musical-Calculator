@@ -10,9 +10,13 @@ Features:
 - Button colour changes when hovered over
 ---
 0-9: 0-9
+
 + : +
+  
 - : -
+  
 * : *
+  
 / : /
 ENTER : =
 DELETE : AC
