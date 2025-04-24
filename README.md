@@ -8,3 +8,13 @@ Features:
 - Keyboard input supported
 - Mouse click input supported
 - Button colour changes when hovered over
+---
+0-9: 0-9
++ : +
+- : -
+* : *
+/ : /
+ENTER : =
+DELETE : AC
+BACKSPACE : delete previous digit
+All music stop: stops all ongoing music
