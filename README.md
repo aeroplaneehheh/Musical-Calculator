@@ -1,6 +1,6 @@
 # Musical Calculator
 Makes music, hopefully
-FEATURES:
+-------------------------FEATURES:---------------------------------
 - Can do addition, subtraction, multiplication, and division
 - Audio plays on some buttons
 - 0-9 8-bit notes from C4 to E5
